@@ -5,47 +5,64 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 3.9%;
+
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 3.9%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --popover-foreground: 0 0% 3.9%;
+
+    --primary: 24 95% 53%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 24 95% 53%;
+
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 24 95% 53%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 24 95% 53%;
   }
 }
 
@@ -55,52 +72,225 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Custom styles */
+.product-card {
+  @apply bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-all duration-300;
 }
 
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out forwards;
+.product-card-image {
+  @apply p-4 border-b border-gray-100;
 }
 
-@keyframes pulse {
+.product-card-content {
+  @apply p-4;
+}
+
+.product-card-rating {
+  @apply flex items-center mb-2;
+}
+
+.product-card-title {
+  @apply text-lg font-medium text-gray-900 mb-1;
+}
+
+.product-card-price {
+  @apply text-orange-600 font-medium mb-3;
+}
+
+.product-card-tags {
+  @apply flex flex-wrap gap-2;
+}
+
+/* Comparison table styles */
+.comparison-table {
+  @apply w-full border-collapse;
+}
+
+.comparison-table th {
+  @apply p-4 border border-gray-200 text-left bg-gray-50;
+}
+
+.comparison-table td {
+  @apply p-4 border border-gray-200;
+}
+
+.comparison-table tr:nth-child(even) {
+  @apply bg-gray-50;
+}
+
+.comparison-table tr:nth-child(odd) {
+  @apply bg-white;
+}
+
+/* Feature list styles */
+.feature-list {
+  @apply space-y-3 mb-8;
+}
+
+.feature-list-item {
+  @apply flex items-start gap-3;
+}
+
+.feature-list-icon {
+  @apply h-5 w-5 text-orange-600 flex-shrink-0 mt-0.5;
+}
+
+.feature-list-text {
+  @apply text-gray-700;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-md shadow-sm;
+}
+
+.btn-outline {
+  @apply border border-orange-600 text-orange-600 hover:bg-orange-50 font-medium rounded-md;
+}
+
+/* Section styles */
+.section-title {
+  @apply text-2xl md:text-3xl font-bold text-gray-900 mb-4;
+}
+
+.section-subtitle {
+  @apply text-lg text-gray-600 max-w-3xl mx-auto;
+}
+
+/* 3D Transform Utilities */
+.perspective-500 {
+  perspective: 500px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.rotate-y-10:hover {
+  transform: rotateY(10deg);
+}
+
+.rotate-x-10:hover {
+  transform: rotateX(10deg);
+}
+
+/* Glassmorphism */
+.glass-card {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 rounded-xl;
+}
+
+/* Animated gradient backgrounds */
+.animated-gradient {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
   0% {
-    transform: scale(0.95);
-    opacity: 0.5;
+    background-position: 0% 50%;
   }
   50% {
-    transform: scale(1.05);
-    opacity: 1;
+    background-position: 100% 50%;
   }
   100% {
-    transform: scale(0.95);
-    opacity: 0.5;
+    background-position: 0% 50%;
   }
 }
 
-.animate-pulse {
-  animation: pulse 3s infinite;
+/* Floating animation */
+.floating {
+  animation: floating 3s ease-in-out infinite;
 }
 
-.delay-300 {
-  animation-delay: 300ms;
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
-.delay-500 {
-  animation-delay: 500ms;
+/* Shine effect */
+.shine {
+  position: relative;
+  overflow: hidden;
 }
 
-.delay-700 {
-  animation-delay: 700ms;
+.shine::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: rotate(30deg) translate(-100%, -100%);
+  }
+  100% {
+    transform: rotate(30deg) translate(100%, 100%);
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Timeline connector styles */
+.timeline-connector {
+  @apply absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-orange-500 via-red-500 to-orange-500 transform -translate-x-1/2;
+}
+
+/* Process step hover effect */
+.process-step-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.process-step-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Gradient text for section headings */
+.gradient-heading {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600;
+}
+
+/* 3D card effect */
+.card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-3d-content {
+  transition: transform 0.5s ease;
+}
+
+.card-3d:hover .card-3d-content {
+  transform: rotateY(5deg) rotateX(-5deg);
 }
 

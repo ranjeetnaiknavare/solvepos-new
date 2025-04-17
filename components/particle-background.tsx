@@ -1,128 +1,116 @@
 "use client"
 
-import { useCallback } from "react"
-import dynamic from "next/dynamic"
-
-const DynamicParticles = dynamic(() => import("react-tsparticles").then((mod) => mod.default), {
-  ssr: false,
-})
-
-const DynamicParticlesLoader = dynamic(() => import("tsparticles-engine").then((mod) => mod.loadFull), {
-  ssr: false,
-})
+import { useEffect, useState } from "react"
 
 export function ParticleBackground() {
-  const particlesInit = useCallback(async (engine: any) => {
-    await DynamicParticlesLoader(engine)
-  }, [])
+  const [mounted, setMounted] = useState(false)
 
-  return (
-    <DynamicParticles
-      id="tsparticles"
-      init={particlesInit}
-      options={{
-        fullScreen: {
-          enable: true,
-          zIndex: -1,
-        },
-        particles: {
-          number: {
-            value: 80,
-            density: {
-              enable: true,
-              value_area: 800,
+  useEffect(() => {
+    const loadParticles = async () => {
+      try {
+        // Dynamically import the libraries to avoid SSR issues
+        const { tsParticles } = await import("tsparticles-engine")
+        const { loadFull } = await import("tsparticles")
+
+        await loadFull(tsParticles)
+
+        await tsParticles.load("tsparticles", {
+          fullScreen: {
+            enable: false,
+            zIndex: -1,
+          },
+          background: {
+            color: {
+              value: "transparent",
             },
           },
-          color: {
-            value: "#3b82f6",
-          },
-          shape: {
-            type: "circle",
-          },
-          opacity: {
-            value: 0.5,
-            random: false,
-            anim: {
-              enable: false,
-              speed: 1,
-              opacity_min: 0.1,
-              sync: false,
+          fpsLimit: 120,
+          interactivity: {
+            events: {
+              onClick: {
+                enable: false,
+                mode: "push",
+              },
+              onHover: {
+                enable: true,
+                mode: "repulse",
+              },
+              resize: true,
             },
-          },
-          size: {
-            value: 3,
-            random: true,
-            anim: {
-              enable: false,
-              speed: 40,
-              size_min: 0.1,
-              sync: false,
-            },
-          },
-          line_linked: {
-            enable: true,
-            distance: 150,
-            color: "#3b82f6",
-            opacity: 0.4,
-            width: 1,
-          },
-          move: {
-            enable: true,
-            speed: 2,
-            direction: "none",
-            random: false,
-            straight: false,
-            out_mode: "out",
-            bounce: false,
-            attract: {
-              enable: false,
-              rotateX: 600,
-              rotateY: 1200,
-            },
-          },
-        },
-        interactivity: {
-          detect_on: "canvas",
-          events: {
-            onhover: {
-              enable: true,
-              mode: "repulse",
-            },
-            onclick: {
-              enable: true,
-              mode: "push",
-            },
-            resize: true,
-          },
-          modes: {
-            grab: {
-              distance: 400,
-              line_linked: {
-                opacity: 1,
+            modes: {
+              push: {
+                quantity: 4,
+              },
+              repulse: {
+                distance: 100,
+                duration: 0.4,
               },
             },
-            bubble: {
-              distance: 400,
-              size: 40,
-              duration: 2,
-              opacity: 8,
-              speed: 3,
+          },
+          particles: {
+            color: {
+              value: "#ffffff",
             },
-            repulse: {
-              distance: 200,
-              duration: 0.4,
+            links: {
+              color: "#ffffff",
+              distance: 150,
+              enable: true,
+              opacity: 0.2,
+              width: 1,
             },
-            push: {
-              particles_nb: 4,
+            move: {
+              direction: "none",
+              enable: true,
+              outModes: {
+                default: "bounce",
+              },
+              random: false,
+              speed: 1,
+              straight: false,
             },
-            remove: {
-              particles_nb: 2,
+            number: {
+              density: {
+                enable: true,
+                area: 800,
+              },
+              value: 80,
+            },
+            opacity: {
+              value: 0.2,
+            },
+            shape: {
+              type: "circle",
+            },
+            size: {
+              value: { min: 1, max: 3 },
             },
           },
-        },
-        retina_detect: true,
-      }}
-    />
-  )
+          detectRetina: true,
+        })
+      } catch (error) {
+        console.error("Failed to initialize particles:", error)
+      }
+    }
+
+    setMounted(true)
+    loadParticles()
+
+    return () => {
+      // Cleanup function
+      const cleanup = async () => {
+        try {
+          const { tsParticles } = await import("tsparticles-engine")
+          await tsParticles.destroy()
+        } catch (error) {
+          console.error("Failed to cleanup particles:", error)
+        }
+      }
+      cleanup()
+    }
+  }, [])
+
+  if (!mounted) return null
+
+  return <div id="tsparticles" className="absolute inset-0 -z-10" aria-hidden="true"></div>
 }
 

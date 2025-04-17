@@ -1,15 +1,18 @@
 import type React from "react"
+import { Inter } from "next/font/google"
+import { ModernNavbar } from "@/components/modern-navbar"
+import { ModernFooter } from "@/components/modern-footer"
 import { FloatingChatBubble } from "@/components/FloatingChatBubble"
-import { Layout } from "@/components/layout"
-import { LeadCapturePopup } from "@/components/LeadCapturePopup"
 import { ThemeProvider } from "@/components/theme-provider"
 import "@/app/globals.css"
-import "@/styles/animations.css"
+
+// Use the Inter font
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 
 export const metadata = {
-  title: "SolvePOS - Find Your Perfect POS Solution",
+  title: "SolvePOS - Find & Compare the Best POS Systems",
   description:
-    "We partner with leading POS companies to help businesses worldwide choose and implement the perfect POS systems tailored to your unique needs.",
+    "Compare top POS systems, read reviews, and get expert advice to find the right solution for your business needs.",
   generator: "v0.dev",
 }
 
@@ -19,21 +22,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={`${inter.variable}`}>
+      <body className="bg-white text-gray-900 min-h-screen">
         <ThemeProvider attribute="class" defaultTheme="light">
-          <Layout>
-            {children}
-            <FloatingChatBubble />
-            <LeadCapturePopup />
-          </Layout>
+          <ModernNavbar />
+          <main>{children}</main>
+          <ModernFooter />
+          <FloatingChatBubble />
         </ThemeProvider>
       </body>
     </html>
   )
 }
-
-import "./globals.css"
 
 
 
